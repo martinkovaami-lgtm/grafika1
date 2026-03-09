@@ -6,13 +6,11 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseMotionAdapter;
 
-
 public class gui extends JFrame {
 
     private JTextField tfPrvniCislo;
     private JTextField tfDruheCislo;
     private JLabel lbVysledek;
-
 
     public gui() {
         setTitle("pridat okna s pocetni operaci");
@@ -24,14 +22,18 @@ public class gui extends JFrame {
 
     private void initGui() {
         tfPrvniCislo = new JTextField("0", 8);
-        tfDruheCislo= new JTextField("0", 8);
-        lbVysledek= new JLabel("0");
-        JPanel panel1 = new JPanel();
+        tfDruheCislo = new JTextField("0", 8);
+        lbVysledek = new JLabel("0");
+
+        // Oprava: přejmenováno z panel1 na pnlSever
+        JPanel pnlSever = new JPanel();
 
         pnlSever.add(tfPrvniCislo);
         pnlSever.add(new JLabel("+"));
         pnlSever.add(tfDruheCislo);
-        JButton btRonaSe=new JButton("=");
+
+        // Oprava překlepu v btRovnaSe
+        JButton btRovnaSe = new JButton("=");
         pnlSever.add(btRovnaSe);
         pnlSever.add(lbVysledek);
 
@@ -40,24 +42,17 @@ public class gui extends JFrame {
         btRovnaSe.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String prvni = tfPrvniCislo.getText();
-                double druhyDouble;
                 try {
-                    druhyDouble=Double.parseDouble(tfDruheCislo.getText());
+                    // Bezpečné načtení a převod obou čísel najednou
+                    double prvniDouble = Double.parseDouble(tfPrvniCislo.getText());
+                    double druheDouble = Double.parseDouble(tfDruheCislo.getText());
 
-                } catch (NumberFormatException ex){
-                    JOptionPane.showMessageDialog (gui.this);
-                    return;
+                    double vysledek = prvniDouble + druheDouble;
+                    lbVysledek.setText(String.valueOf(vysledek));
+
+                } catch (NumberFormatException ex) {
+                    JOptionPane.showMessageDialog(gui.this, "Zadejte platná čísla!");
                 }
-                String druhe = tfDruheCislo.getText();
-
-                var prvniDouble=Double.parseDouble(prvni);
-                var druheDouble=Double.valueOf(druhe);
-
-
-                var vysledek = prvniDouble + druheDouble;
-
-                lbVysledek.setText(String.valueOf(vysledek));
             }
         });
 
@@ -65,17 +60,15 @@ public class gui extends JFrame {
             public void mouseDragged(MouseEvent e) {
                 Graphics2D g = (Graphics2D) getGraphics();
                 g.fillOval(e.getX() - 5, e.getY() - 5, 10, 10);
-
-
             }
         });
-
     }
 
-    static void main(String[] args) {
-        SwingUtilites.invokeLater(new Runnable() {
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(new Runnable() {
             public void run() {
-                new gui();
+                gui okno = new gui();
+                okno.setVisible(true); // Oprava: přidáno zviditelnění okna
             }
         });
     }
