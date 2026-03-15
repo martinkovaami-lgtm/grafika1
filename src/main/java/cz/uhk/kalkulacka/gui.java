@@ -25,14 +25,12 @@ public class gui extends JFrame {
         tfDruheCislo = new JTextField("0", 8);
         lbVysledek = new JLabel("0");
 
-        // Oprava: přejmenováno z panel1 na pnlSever
         JPanel pnlSever = new JPanel();
 
         pnlSever.add(tfPrvniCislo);
         pnlSever.add(new JLabel("+"));
         pnlSever.add(tfDruheCislo);
 
-        // Oprava překlepu v btRovnaSe
         JButton btRovnaSe = new JButton("=");
         pnlSever.add(btRovnaSe);
         pnlSever.add(lbVysledek);
@@ -68,7 +66,7 @@ public class gui extends JFrame {
         SwingUtilities.invokeLater(new Runnable() {
             public void run() {
                 gui okno = new gui();
-                okno.setVisible(true); // Oprava: přidáno zviditelnění okna
+                okno.setVisible(true);
             }
         });
     }
